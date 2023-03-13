@@ -1,34 +1,33 @@
 from django.http import Http404
 from rest_framework import generics
-from .permissions import IsParent
+from rest_framework.permissions import IsAdminUser
+from .permissions import (
+    ParentOnlyViewAndTeacherEdit,
+    OnlyStaffCanSeeListViews,
+)
 from .models import Child, Parent
 from .serializers import ChildSerializer, ParentSerializer
 
 
 class ChildList(generics.ListCreateAPIView):
+    permission_classes = [OnlyStaffCanSeeListViews]
     queryset = Child.objects.all()
     serializer_class = ChildSerializer
 
 
-class ChildDetail(generics.RetrieveAPIView):
+class ChildDetail(generics.RetrieveUpdateAPIView):
+    permission_classes = [ParentOnlyViewAndTeacherEdit]
+    queryset = Child.objects.all()
     serializer_class = ChildSerializer
-
-    def get_object(self):
-        child_id = self.kwargs["pk"]
-
-        try:
-            child = Child.objects.get(id=child_id)
-            self.check_object_permissions(self.request.user, child.parent)
-            return child
-        except Child.DoesNotExist:
-            raise Http404
 
 
 class ParentList(generics.ListCreateAPIView):
+    permission_classes = [OnlyStaffCanSeeListViews]
     queryset = Parent.objects.all()
     serializer_class = ParentSerializer
 
 
-class ParentDetail(generics.RetrieveUpdateDestroyAPIView):
+class ParentDetail(generics.RetrieveUpdateAPIView):
+    permission_classes = [IsAdminUser]
     queryset = Parent.objects.all()
     serializer_class = ParentSerializer
