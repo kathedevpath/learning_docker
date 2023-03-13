@@ -16,9 +16,7 @@ class ChildSerializer(serializers.ModelSerializer):
 class ParentSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
-            "first_name",
-            "last_name",
-            "email",
+            "user",
             "child",
         )
         model = Parent
