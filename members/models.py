@@ -7,7 +7,7 @@ class Parent(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
+        return self.user.email
 
 
 class Child(models.Model):
