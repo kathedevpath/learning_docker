@@ -12,7 +12,7 @@ class Parent(models.Model):
 
 class Child(models.Model):
     full_name = models.CharField(max_length=100)
-    birth_date = models.DateTimeField()
+    birth_date = models.DateField()
     parent = models.ForeignKey(Parent, on_delete=models.CASCADE, related_name="child")
 
     @property
