@@ -13,7 +13,7 @@ list view for requested day for every Children ->teacher"""
 
 class DayPlanDailyListView(generics.ListCreateAPIView):
     permission_classes = [OnlyStaffCanSeeListViews]
-    queryset = DayPlan.objects.all()
+    queryset = DayPlan.objects.all().order_by("day")
     serializer_class = DayPlanSerializer
 
 
