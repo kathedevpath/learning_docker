@@ -1,10 +1,8 @@
 from django.test import TestCase
-from django_config import settings
 from django.contrib.auth import get_user_model
 from datetime import date
 
 from .models import Child, Parent
-from accounts.models import CustomUser
 
 
 class MembersTests(TestCase):
