@@ -1,13 +1,9 @@
 from django.test import TestCase
-from django.urls import reverse
-from rest_framework import status
-from rest_framework.test import APITestCase
 from django.contrib.auth import get_user_model
 from datetime import date
 
-from accounts.models import CustomUser
-from .models import Child, Parent,Teacher,Group
-from .serializers import ChildSerializer, ParentSerializer, GroupSerializer
+from .models import Child, Parent
+
 
 class MembersTests(TestCase):
     def setUp(self):
