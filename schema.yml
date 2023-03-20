@@ -1,0 +1,427 @@
+openapi: 3.0.3
+info:
+  title: School Tracker API project
+  version: 1.0.0
+  description: App for tracking child activity in educational institution
+paths:
+  /api/v1/dayplans/:
+    get:
+      operationId: dayplans_list
+      tags:
+      - dayplans
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DayPlan'
+          description: ''
+    post:
+      operationId: dayplans_create
+      tags:
+      - dayplans
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DayPlan'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DayPlan'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DayPlan'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DayPlan'
+          description: ''
+  /api/v1/dayplans/child/{id}/{day}/:
+    get:
+      operationId: dayplans_child_retrieve
+      parameters:
+      - in: path
+        name: day
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dayplans
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/members/child/{id}/:
+    get:
+      operationId: members_child_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - members
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+          description: ''
+    put:
+      operationId: members_child_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - members
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Child'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Child'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Child'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+          description: ''
+    patch:
+      operationId: members_child_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - members
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedChild'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedChild'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedChild'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+          description: ''
+  /api/v1/members/children/:
+    get:
+      operationId: members_children_list
+      tags:
+      - members
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Child'
+          description: ''
+    post:
+      operationId: members_children_create
+      tags:
+      - members
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Child'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Child'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Child'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+          description: ''
+  /api/v1/members/parent/:
+    get:
+      operationId: members_parent_list
+      tags:
+      - members
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Parent'
+          description: ''
+    post:
+      operationId: members_parent_create
+      tags:
+      - members
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Parent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Parent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Parent'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parent'
+          description: ''
+  /api/v1/members/parent/{id}/:
+    get:
+      operationId: members_parent_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - members
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parent'
+          description: ''
+    put:
+      operationId: members_parent_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - members
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Parent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Parent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Parent'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parent'
+          description: ''
+    patch:
+      operationId: members_parent_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - members
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedParent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedParent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedParent'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parent'
+          description: ''
+components:
+  schemas:
+    BehaviourEnum:
+      enum:
+      - OK
+      - NT
+      - ND
+      type: string
+      description: |-
+        * `OK` - Everything ok
+        * `NT` - We need to talk
+        * `ND` - Not defined
+    Child:
+      type: object
+      properties:
+        full_name:
+          type: string
+          maxLength: 100
+        age:
+          type: string
+          readOnly: true
+        parent:
+          type: integer
+      required:
+      - age
+      - full_name
+      - parent
+    DayPlan:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        day:
+          type: string
+          format: date
+          readOnly: true
+        meals_at_school:
+          $ref: '#/components/schemas/MealsAtSchoolEnum'
+        behaviour:
+          $ref: '#/components/schemas/BehaviourEnum'
+        summary:
+          type: string
+          nullable: true
+        child:
+          type: integer
+      required:
+      - child
+      - day
+      - id
+    MealsAtSchoolEnum:
+      enum:
+      - FL
+      - HF
+      - FW
+      - NM
+      type: string
+      description: |-
+        * `FL` - Fully eaten
+        * `HF` - Halfy eaten
+        * `FW` - Poorly eaten
+        * `NM` - Not marked
+    Parent:
+      type: object
+      properties:
+        user:
+          type: integer
+        child:
+          type: array
+          items:
+            type: integer
+      required:
+      - child
+      - user
+    PatchedChild:
+      type: object
+      properties:
+        full_name:
+          type: string
+          maxLength: 100
+        age:
+          type: string
+          readOnly: true
+        parent:
+          type: integer
+    PatchedParent:
+      type: object
+      properties:
+        user:
+          type: integer
+        child:
+          type: array
+          items:
+            type: integer
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
