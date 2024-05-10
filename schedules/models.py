@@ -19,8 +19,8 @@ def check_for_event():
 
     if len(events) > 0:
         return events[0].title
-
-    return "Interesting events soon"
+    else:
+        return 'Event list soon!'
 
 
 class DayPlan(models.Model):
