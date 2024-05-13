@@ -17,13 +17,10 @@ def check_for_event():
     today = timezone.now().date()
     events = Event.objects.filter(date=today)
 
-    if events:
-        if len(events) > 0:
+    if len(events) > 0:
         return events[0].title
     else:
         return 'Event list soon!'
-
-    return "Interesting events soon"
 
 
 class DayPlan(models.Model):
