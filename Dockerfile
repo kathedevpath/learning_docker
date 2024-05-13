@@ -4,7 +4,7 @@ ARG PYTHON_VERSION=3.11-slim-bullseye
 FROM python:${PYTHON_VERSION}
 
 #prepare place to store project
-ENV HomeForDocker= /Users/kathe/workspace/learning_docker/
+ENV HomeForDocker /Users/kathe/workspace/learning_docker/
 RUN mkdir -p $HomeForDocker
 WORKDIR $HomeForDocker
 
