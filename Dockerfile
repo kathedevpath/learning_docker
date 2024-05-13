@@ -4,22 +4,20 @@ ARG PYTHON_VERSION=3.11-slim-bullseye
 FROM python:${PYTHON_VERSION}
 
 #prepare place to store project
-ENV HomeForDocker /Users/kathe/workspace/learning_docker/
-RUN mkdir -p $HomeForDocker
-WORKDIR $HomeForDocker
-
+ENV APP_HOME /app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-RUN pip install --upgrade pip
+#set work directory (where all upcoming commands will be applied)
+WORKDIR $APP_HOME
 
-#copy whole project to your docker home directory
-COPY . $HomeForDocker
-
+#Copy requirements and install dependencies
+COPY requirements.txt .
 RUN pip install -r requirements.txt
+
+#copy the project
+COPY . .
 
 EXPOSE 8000
 
-CMD python manage.py makemigrations
-CMD python manage.py migrate
-CMD python manage.py runserver
+CMD ["sh", "-c", "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
