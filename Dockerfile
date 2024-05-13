@@ -20,7 +20,6 @@ RUN pip install -r requirements.txt
 
 EXPOSE 8000
 
-#I don't have DB setup
-# CMD python manage.py makemigrations
-# CMD python manage.py migrate
+CMD python manage.py makemigrations
+CMD python manage.py migrate
 CMD python manage.py runserver
