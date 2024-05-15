@@ -13,15 +13,6 @@ class Event(models.Model):
         return self.title
 
 
-def check_for_event():
-    today = timezone.now().date()
-    events = Event.objects.filter(date=today)
-
-    if len(events) > 0:
-        return events[0].title
-    else:
-        return 'Event list soon!'
-
 
 class DayPlan(models.Model):
     day = models.DateField(auto_now=True)
@@ -52,7 +43,7 @@ class DayPlan(models.Model):
         max_length=2, choices=BEHAVIOUR_CHOICES, default=NOTDEFINED
     )
     summary = models.TextField(null=True, blank=True)
-    event = check_for_event()
+    
 
     def __str__(self):
         return self.child.full_name
