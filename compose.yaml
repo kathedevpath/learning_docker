@@ -6,7 +6,7 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      - ./.env
+      - ./.envcompose
     depends_on:
       db:
         condition: service_healthy
