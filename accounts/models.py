@@ -12,17 +12,17 @@ class CustomUser(AbstractUser):
     email = models.EmailField(_("email address"), unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    
-    TEACHER = "TH"
-    PARENT = "PR"
-    UNSET = "US"
-    USER_TYPES = [
-        (TEACHER, "Teacher"),
-        (PARENT, "Parent"),
-        (UNSET, "Unset"),
-    ]
+
+    class UserType(models.TextChoices):
+        TEACHER = "TH", "Teacher"
+        PARENT = "PR", "Parent"
+        UNSET = "US", "Unset"
+
+   
     user_type = models.CharField(
-        max_length=2, choices=USER_TYPES, default=[UNSET]
+        max_length=2, 
+        choices=UserType.choices, 
+        default=UserType.UNSET
     )
 
     USERNAME_FIELD = "email"
@@ -42,10 +42,9 @@ class CustomUser(AbstractUser):
     
     #override model's save() method to automatically set is_staff for Teacher instances
     def save(self, *args, **kwargs):
-        if self.is_superuser or self.user_type == self.TEACHER :
+        if self.is_superuser or self.user_type == self.UserType.TEACHER:
             self.is_staff = True 
         else:
-            self.user_type = self.PARENT
             self.is_staff = False
 
         super().save(*args, **kwargs)
