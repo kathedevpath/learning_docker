@@ -3,17 +3,23 @@ from accounts.models import CustomUser
 from django.utils import timezone
 
 
-class Parent(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+
+
+class Group(models.Model):
+    name =  models.CharField(max_length=100)
 
     def __str__(self):
-        return self.user.email
+        return self.name
 
 
 class Child(models.Model):
     full_name = models.CharField(max_length=100)
     birth_date = models.DateField()
-    parent = models.ForeignKey(Parent, on_delete=models.CASCADE, related_name="child")
+    my_group = models.ForeignKey(
+        Group, 
+        on_delete=models.CASCADE, 
+        related_name="children_in_group")
     
     @property
     def age(self):
@@ -24,11 +30,6 @@ class Child(models.Model):
             - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
         )
         return age
-    
-    @property
-    def group_member(self):
-        groups = self.group_set.all()
-        return ", ".join([group.group_name for group in groups])
 
     def __str__(self):
         return self.full_name
@@ -37,18 +38,23 @@ class Child(models.Model):
         verbose_name = "Child"
         verbose_name_plural = "Children"
 
-class Teacher(models.Model):
-    user =  models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+class Parent(CustomUser):
+    children = models.ManyToManyField(Child, related_name='parents')
 
     def __str__(self):
-        return self.user.email
+        return f"{self.first_name} {self.last_name}"
+
+    class Meta:
+        verbose_name = "Parent"
+        
 
 
-class Group(models.Model):
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    members = models.ManyToManyField(Child)
-    group_name = models.CharField(max_length=50)
+class Teacher(CustomUser):
+    teacher_groups = models.ManyToManyField(Group, related_name="teachers")
 
     def __str__(self):
-        return self.group_name
+        return f"{self.first_name} {self.last_name}"
 
+    class Meta:
+        verbose_name = "Teacher"
+        
