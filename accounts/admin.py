@@ -14,8 +14,7 @@ class CustomUserAdmin(UserAdmin):
     model = CustomUser
     list_display = (
         "email",
-        "first_name",
-        "last_name",
+        "full_name",
         'user_type',
         "is_staff",
         "is_active",
@@ -45,7 +44,7 @@ class CustomUserAdmin(UserAdmin):
                     "user_type",
                     "password1",
                     "password2",
-                    "groups",
+                    # "groups",
                 )
             },
         ),

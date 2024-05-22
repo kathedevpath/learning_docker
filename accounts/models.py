@@ -29,10 +29,11 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = [
         "first_name",
         "last_name",
+        "user_type",
     ]
 
     objects = CustomUserManager()
-
+    
     def __str__(self):
         return self.email
 
@@ -46,8 +47,15 @@ class CustomUser(AbstractUser):
             self.is_staff = True 
         else:
             self.is_staff = False
+        super().save(*args,**kwargs)
 
-        super().save(*args, **kwargs)
+        #add logic to differentiate user_type and create a particular instance
+        if self.user_type == self.UserType.PARENT:
+            Parent.objects.create(customuser_ptr=self)
+
+        elif self.user_type == self.UserType.TEACHER:
+            Teacher.objects.create(customuser_ptr=self)
+
 
     class Meta:
         verbose_name = "user"
