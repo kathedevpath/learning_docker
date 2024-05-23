@@ -28,11 +28,8 @@ class CustomUserAdmin(UserAdmin):
 
 
     fieldsets = (
-        (None, {"fields": ("email", "password")}),
-        (
-            "Permissions",
-            {"fields": ("user_type","is_staff", "is_active", "groups", "user_permissions")},
-        ),
+        (None, {"fields": ("email", "first_name", "last_name","password")}),
+
     )
     add_fieldsets = (
         (
@@ -51,6 +48,6 @@ class CustomUserAdmin(UserAdmin):
         ),
     )
     search_fields = ("email",)
-    ordering = ("email",)
+    ordering = ("date_joined",)
 
 
