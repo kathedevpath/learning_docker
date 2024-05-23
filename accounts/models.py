@@ -29,6 +29,7 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = [
         "first_name",
         "last_name",
+        "user_type",
     ]
 
     objects = CustomUserManager()
