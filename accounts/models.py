@@ -14,13 +14,13 @@ class CustomUser(AbstractUser):
     last_name = models.CharField(max_length=50)
 
     class UserType(models.TextChoices):
-        TEACHER = "TH", "Teacher"
-        PARENT = "PR", "Parent"
-        UNSET = "US", "Unset"
+        TEACHER = "teacher", "Teacher"
+        PARENT = "parent", "Parent"
+        UNSET = "unset", "Unset"
 
    
     user_type = models.CharField(
-        max_length=2, 
+        max_length=10, 
         choices=UserType.choices, 
         default=UserType.UNSET
     )
@@ -40,13 +40,11 @@ class CustomUser(AbstractUser):
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
     
-    #override model's save() method to automatically set is_staff for Teacher instances
     def save(self, *args, **kwargs):
         if self.is_superuser or self.user_type == self.UserType.TEACHER:
             self.is_staff = True 
         else:
             self.is_staff = False
-
         super().save(*args, **kwargs)
 
     class Meta:
